@@ -1,2 +1,3 @@
-# insti-id-app
-App to instantly display your ID card
+# insti_id
+
+A new Flutter project.
