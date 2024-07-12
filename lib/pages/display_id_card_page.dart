@@ -2,8 +2,8 @@
 
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:insti_id/utils/helper_functions.dart';
-import 'package:insti_id/utils/data_manager.dart';
+import 'package:id_quick/utils/helper_functions.dart';
+import 'package:id_quick/utils/data_manager.dart';
 
 class DisplayIDHomePage extends StatefulWidget {
   const DisplayIDHomePage({Key? key}) : super(key: key);

@@ -1,7 +1,7 @@
 // main.dart
 
 import 'package:flutter/material.dart';
-import 'package:insti_id/pages/display_id_card_page.dart';
+import 'package:id_quick/pages/display_id_card_page.dart';
 
 void main() async {
   runApp(const MyApp());

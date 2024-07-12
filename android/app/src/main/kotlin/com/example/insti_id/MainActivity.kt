@@ -1,4 +1,4 @@
-package com.example.insti_id
+package com.example.id_quick
 
 import io.flutter.embedding.android.FlutterActivity
 

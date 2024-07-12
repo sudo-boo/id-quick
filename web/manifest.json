@@ -1,6 +1,6 @@
 {
-    "name": "insti_id",
-    "short_name": "insti_id",
+    "name": "id_quick",
+    "short_name": "id_quick",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
