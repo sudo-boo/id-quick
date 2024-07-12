@@ -1,3 +1,3 @@
-# insti_id
+# id_quick
 
-A new Flutter project.
+Keep your ID card close and handy with this app!
