@@ -1,6 +1,7 @@
 // data-manager.dart
 
 import 'package:flutter/material.dart';
+import 'package:id_quick/utils/helper_functions.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -41,9 +42,24 @@ class DataManager {
   void _showSnackBar(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(message),
-        duration: const Duration(seconds: 3),
+        content: Text(
+          message,
+          textAlign: TextAlign.center,
+        ),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        duration: const Duration(seconds: 2),
+        behavior: SnackBarBehavior.floating,
+        margin: EdgeInsets.only(
+          bottom: screenHeight(context) * 0.1,
+          right: screenWidth(context) * 0.25,
+          left: screenWidth(context) * 0.25,
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30.0),
+        ),
       ),
     );
   }
+
+
 }
