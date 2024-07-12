@@ -17,6 +17,7 @@ class DataManager {
   Future<void> saveImagePath(String path) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('imagePath', path);
+    _showSnackBar('ID locked and loaded!');
   }
 
   Future<String?> pickImage() async {
