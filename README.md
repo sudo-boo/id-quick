@@ -2,15 +2,26 @@
 
 Keep your ID card close and handy with this app!
 
+### Installation
+
+You can download and install ID-Quick from the releases section of this repository.
+
 ## Features
 
 - **Easy Access:** Quickly access your ID card with just a tap.
 - **Secure Storage:** Keep your ID card stored secured and protected on your mobile device.
 
-### Installation
+### Upcoming Features
 
-You can download and install ID-Quick from the releases section of this repository.
+(that I think would be good)
 
+- **Multiple IDs support**
+- **Widgets on Home Screen**
+- **Scan and Store Option**
+
+### Contribution
+
+You can fork the repo, create a new branch named the feature you implemented, and create a PR.
 
 ### Feedback
 
