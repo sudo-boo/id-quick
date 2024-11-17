@@ -61,29 +61,16 @@ class _VerifyPageState extends State<VerifyPage> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        // fontFamily: 'Inter',
-      ),
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
+    return Scaffold(
         backgroundColor: Colors.red.shade100,
         body: Center(
           child: _supportState
-              ? Builder(
+          ? Builder(
             builder: (BuildContext context) {
               return Column(
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   const Spacer(),
-                  // Padding(
-                  //   padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-                  //   child: Container(
-                  //     margin: const EdgeInsets.symmetric(vertical: 10.0),
-                  //     height: 1.0,
-                  //     color: Colors.black,
-                  //   ),
-                  // ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
                     child: ClipRRect(
@@ -95,14 +82,6 @@ class _VerifyPageState extends State<VerifyPage> {
                       ),
                     ),
                   ),
-                  // Padding(
-                  //   padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-                  //   child: Container(
-                  //     margin: const EdgeInsets.symmetric(vertical: 10.0),
-                  //     height: 1.0,
-                  //     color: Colors.black,
-                  //   ),
-                  // ),
                   const SizedBox(height: 10,),
                   SizedBox(height: screenHeight(context) * 0.25,),
                   ElevatedButton(
@@ -129,9 +108,8 @@ class _VerifyPageState extends State<VerifyPage> {
               );
             },
           )
-              : const Text('Fingerprint authentication not supported or failed'),
+          : const Text('Fingerprint authentication not supported or failed'),
         ),
-      ),
-    );
+      );
   }
 }
