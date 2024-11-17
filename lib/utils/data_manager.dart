@@ -99,7 +99,7 @@ class DataManager {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Choose Image Source'),
+          title: const Text('Choose an Image Source'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
