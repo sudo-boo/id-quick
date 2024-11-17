@@ -65,15 +65,24 @@ class DataManager {
     return ids.length;
   }
 
-  // Pick an image and add a new ID
+  // Pick an image from the gallery or capture a new picture and add a new ID
   Future<String?> pickAndAddId(String idName) async {
     try {
       final ImagePicker picker = ImagePicker();
-      final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+
+      final String? source = await _showImageSourceDialog();
+      if (source == null) {
+        _showSnackBar('No option selected.');
+        return null;
+      }
+
+      final XFile? image = await picker.pickImage(
+        source: source == 'Camera' ? ImageSource.camera : ImageSource.gallery,
+      );
 
       if (image != null) {
         await addId(idName, image.path);
-        return image.path; // Return the image path
+        return image.path;
       } else {
         _showSnackBar('No image selected.');
         return null;
@@ -82,6 +91,37 @@ class DataManager {
       _showSnackBar('Error picking image: $e');
       return null;
     }
+  }
+
+  // Show a dialog to let the user choose between Camera and Gallery
+  Future<String?> _showImageSourceDialog() async {
+    return await showDialog<String>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Choose Image Source'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                leading: const Icon(Icons.camera_alt),
+                title: const Text('Camera'),
+                onTap: () {
+                  Navigator.pop(context, 'Camera');
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.photo_library),
+                title: const Text('Gallery'),
+                onTap: () {
+                  Navigator.pop(context, 'Gallery');
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   // Set a specific ID as the default
