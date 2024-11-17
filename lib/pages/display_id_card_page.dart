@@ -66,11 +66,11 @@ class _DisplayIDHomePageState extends State<DisplayIDHomePage> {
                   child: RotatedBox(
                     quarterTurns: _quarterTurns,
                     child: _imagePath != null
-                        ? Image.file(
+                    ? Image.file(
                       File(_imagePath!),
                       fit: BoxFit.contain,
                     )
-                        : Image.asset(
+                    : Image.asset(
                       'assets/images/placeholder.png',
                       height: screenHeight(context),
                       fit: BoxFit.contain,
