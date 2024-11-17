@@ -73,7 +73,7 @@ class _DisplayIDHomePageState extends State<DisplayIDHomePage> {
                     : Image.asset(
                       'assets/images/placeholder.png',
                       height: screenHeight(context),
-                      fit: BoxFit.contain,
+                      fit: BoxFit.fill,
                     ),
                   ),
                 ),
@@ -83,20 +83,21 @@ class _DisplayIDHomePageState extends State<DisplayIDHomePage> {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      FloatingActionButton(
-                        heroTag: 'rotate_button',
-                        onPressed: _rotateImage,
-                        backgroundColor: Colors.red.shade200,
-                        elevation: 0.0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30.0),
+                      if (_imagePath != null)
+                        FloatingActionButton(
+                          heroTag: 'rotate_button',
+                          onPressed: _rotateImage,
+                          backgroundColor: Colors.red.shade200,
+                          elevation: 0.0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30.0),
+                          ),
+                          child: const Icon(
+                            Icons.rotate_right_rounded,
+                            size: 30,
+                            color: Colors.black,
+                          ),
                         ),
-                        child: const Icon(
-                          Icons.rotate_right_rounded,
-                          size: 30,
-                          color: Colors.black,
-                        ),
-                      ),
                       const SizedBox(height: 10),
                       FloatingActionButton(
                         heroTag: 'menu_button',
