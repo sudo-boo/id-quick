@@ -1,8 +1,9 @@
-// data-manager.dart
+// data_manager.dart
 
+import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:id_quick/utils/helper_functions.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:id_quick/utils/helper_functions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DataManager {
@@ -10,25 +11,69 @@ class DataManager {
 
   DataManager(this.context);
 
-  Future<String?> loadImagePath() async {
+  // Add ID (name and image path)
+  Future<void> addId(String idName, String imagePath) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getString('imagePath');
+    Map<String, String> ids = await getAllIds();
+    ids[idName] = imagePath;
+
+    await prefs.setString('ids', jsonEncode(ids));
+    _showSnackBar('ID "$idName" added successfully!');
   }
 
-  Future<void> saveImagePath(String path) async {
+  // Get all IDs
+  Future<Map<String, String>> getAllIds() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('imagePath', path);
-    _showSnackBar('ID locked and loaded!');
+    String? idsString = prefs.getString('ids');
+    if (idsString == null) {
+      return {};
+    } else {
+      return Map<String, String>.from(jsonDecode(idsString));
+    }
   }
 
-  Future<String?> pickImage() async {
+  // Get specific ID image path by name
+  Future<String?> getId(String idName) async {
+    Map<String, String> ids = await getAllIds();
+    return ids[idName];
+  }
+
+  // Delete a specific ID
+  Future<void> deleteId(String idName) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    Map<String, String> ids = await getAllIds();
+
+    if (ids.containsKey(idName)) {
+      ids.remove(idName);
+      await prefs.setString('ids', jsonEncode(ids));
+
+      // If the deleted ID is the default, clear the default
+      String? defaultIdName = await getDefaultIdName();
+      if (defaultIdName == idName) {
+        await clearDefault();
+      }
+
+      _showSnackBar('ID "$idName" deleted successfully!');
+    } else {
+      _showSnackBar('ID "$idName" not found.');
+    }
+  }
+
+  // Get the count of stored IDs
+  Future<int> getIdsCount() async {
+    Map<String, String> ids = await getAllIds();
+    return ids.length;
+  }
+
+  // Pick an image and add a new ID
+  Future<String?> pickAndAddId(String idName) async {
     try {
       final ImagePicker picker = ImagePicker();
       final XFile? image = await picker.pickImage(source: ImageSource.gallery);
 
       if (image != null) {
-        await saveImagePath(image.path);
-        return image.path;
+        await addId(idName, image.path);
+        return image.path; // Return the image path
       } else {
         _showSnackBar('No image selected.');
         return null;
@@ -39,6 +84,44 @@ class DataManager {
     }
   }
 
+  // Set a specific ID as the default
+  Future<void> setDefault(String idName) async {
+    Map<String, String> ids = await getAllIds();
+    if (ids.containsKey(idName)) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('defaultId', idName);
+      _showSnackBar('ID "$idName" set as default!');
+    } else {
+      _showSnackBar('ID "$idName" not found. Cannot set as default.');
+    }
+  }
+
+  // Get the default ID name
+  Future<String?> getDefaultIdName() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('defaultId');
+  }
+
+  // Get the default ID details (name and image path)
+  Future<Map<String, String>?> getDefaultId() async {
+    String? defaultIdName = await getDefaultIdName();
+    if (defaultIdName != null) {
+      String? imagePath = await getId(defaultIdName);
+      if (imagePath != null) {
+        return {'idName': defaultIdName, 'imagePath': imagePath};
+      }
+    }
+    return null;
+  }
+
+  // Clear the default ID
+  Future<void> clearDefault() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove('defaultId');
+    _showSnackBar('Default ID cleared!');
+  }
+
+  // Show a snackbar for messages
   void _showSnackBar(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -60,6 +143,4 @@ class DataManager {
       ),
     );
   }
-
-
 }
