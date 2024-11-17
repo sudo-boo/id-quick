@@ -2,8 +2,10 @@
 
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:id_quick/utils/helper_functions.dart';
+import 'package:id_quick/pages/ids_manager_page.dart';
 import 'package:id_quick/utils/data_manager.dart';
+import 'package:id_quick/utils/helper_functions.dart';
+import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 
 class DisplayIDHomePage extends StatefulWidget {
   const DisplayIDHomePage({Key? key}) : super(key: key);
@@ -20,7 +22,12 @@ class _DisplayIDHomePageState extends State<DisplayIDHomePage> {
   void initState() {
     super.initState();
     _dataManager = DataManager(context);
-    _loadImagePath();
+    _loadDefaultImagePath();
+    setupWindowFlags();
+  }
+
+  setupWindowFlags() async {
+    await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
   }
 
   Future<void> _loadImagePath() async {
