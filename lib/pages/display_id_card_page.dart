@@ -17,6 +17,7 @@ class DisplayIDHomePage extends StatefulWidget {
 class _DisplayIDHomePageState extends State<DisplayIDHomePage> {
   String? _imagePath;
   late DataManager _dataManager;
+  int _quarterTurns = 0; // Tracks the number of 90-degree rotations
 
   @override
   void initState() {
@@ -26,7 +27,7 @@ class _DisplayIDHomePageState extends State<DisplayIDHomePage> {
     setupWindowFlags();
   }
 
-  setupWindowFlags() async {
+  Future<void> setupWindowFlags() async {
     await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
   }
 
@@ -44,6 +45,12 @@ class _DisplayIDHomePageState extends State<DisplayIDHomePage> {
     }
   }
 
+  void _rotateImage() {
+    setState(() {
+      _quarterTurns = (_quarterTurns + 1) % 4;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,33 +63,60 @@ class _DisplayIDHomePageState extends State<DisplayIDHomePage> {
             child: Stack(
               children: [
                 Center(
-                  child: _imagePath != null
-                      ? Image.file(File(_imagePath!))
-                      : Image.asset(
-                    'assets/images/placeholder.png',
-                    height: screenHeight(context),
-                    fit: BoxFit.fill,
+                  child: RotatedBox(
+                    quarterTurns: _quarterTurns,
+                    child: _imagePath != null
+                    ? Image.file(
+                      File(_imagePath!),
+                      fit: BoxFit.contain,
+                    )
+                    : Image.asset(
+                      'assets/images/placeholder.png',
+                      height: screenHeight(context),
+                      fit: BoxFit.contain,
+                    ),
                   ),
                 ),
                 Positioned(
                   bottom: 20.0,
                   right: 20.0,
-                  child: FloatingActionButton(
-                    onPressed: () {
-                      Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(builder: (context) => const IDsManagerPage()),
-                      );
-                    },
-                    backgroundColor: Colors.red.shade200,
-                    elevation: 0.0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                    ),
-                    child: const Icon(
-                      Icons.menu,
-                      size: 30,
-                      color: Colors.black,
-                    ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      FloatingActionButton(
+                        heroTag: 'rotate_button',
+                        onPressed: _rotateImage,
+                        backgroundColor: Colors.red.shade200,
+                        elevation: 0.0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
+                        child: const Icon(
+                          Icons.rotate_right_rounded,
+                          size: 30,
+                          color: Colors.black,
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      FloatingActionButton(
+                        heroTag: 'menu_button',
+                        onPressed: () {
+                          Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(builder: (context) => const IDsManagerPage()),
+                          );
+                        },
+                        backgroundColor: Colors.red.shade200,
+                        elevation: 0.0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
+                        child: const Icon(
+                          Icons.menu,
+                          size: 30,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
