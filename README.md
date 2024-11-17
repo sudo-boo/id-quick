@@ -14,7 +14,7 @@
 
 - **For Android:**
 
-  Download and Install the `.apk` file from the `Releases`. It would contain the most recent version of the app.
+  Download and Install the latest `.apk` file from the [`Releases`](https://github.com/sudo-boo/id-quick/releases).
   
 - **For iOS:** You would need to build the app using
   
@@ -25,17 +25,14 @@
 
 ## Features
 
-- **Easy Access:** Quickly access your ID card with just a tap.
-- **Secure Storage:** Keep your ID card secured and protected on your mobile device.
+- **Instant Access:** Access your ID cards instantly with a single tap.
+- **Multiple IDs support:** Seamlessly store and manage multiple ID cards in one convenient place.
+- **Secure Storage:** Safeguard your ID cards with robust, password-protected security.
+- **Scan and Store Option:** Effortlessly capture and store ID card images on the go.
 
-### Upcoming Features
-
-(that I think would be good)
-
-- **Multiple IDs support**
-- **Disable SS on view ID**
+### Upcoming Features ([Open to Suggestions](https://github.com/sudo-boo/id-quick/issues/new))
 - **Widgets on Home Screen**
-- **Scan and Store Option**
+
 
 ## Contribution
 
